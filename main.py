@@ -11,17 +11,26 @@ class Application(tk.Frame):
         self.quitButton = None
         self.grid()
         self.createWidgets()
-        self.cells = self.createGrid(self.row, self.col)
+        self.cells = self.createGrid()
+        self.tileMap = self.createTileMap()
 
     def createWidgets(self):
         return
 
-    @staticmethod
-    def createGrid(row, col):
+    def createTileMap(self):
+        tile_map = []
+        for i in range(self.row):
+            tile_row = []
+            for j in range(self.col):
+                tile_row.append(0)
+            tile_map.append(tile_row)
+        return tile_map
+
+    def createGrid(self):
         grid = []
-        for i in range(row):
+        for i in range(self.row):
             row = []
-            for j in range(col):
+            for j in range(self.col):
                 random_seed = math.floor(random.random() * 2)
                 btn = tk.Button(text=f'{random_seed}', width=2, height=1)
                 btn.grid(row=i, column=j)
@@ -40,8 +49,9 @@ class Application(tk.Frame):
 if __name__ == '__main__':
     app = Application(None, 4, 4)
     # Set the window size to 400x300 pixels
-    #app.master.geometry("400x300")
+    # app.master.geometry("400x300")
     # Prevent the window from being resized by the user
     app.master.resizable(True, True)
     app.placeBombs()
+    print(app.tileMap)
     app.mainloop()  # Keep this at the bottom
