@@ -1,6 +1,7 @@
 import math
 import random
 import tkinter as tk
+from cell import Cell
 
 
 class Application(tk.Frame):
@@ -12,19 +13,9 @@ class Application(tk.Frame):
         self.grid()
         self.createWidgets()
         self.cells = self.createGrid()
-        self.tileMap = self.createTileMap()
 
     def createWidgets(self):
         return
-
-    def createTileMap(self):
-        tile_map = []
-        for i in range(self.row):
-            tile_row = []
-            for j in range(self.col):
-                tile_row.append(0)
-            tile_map.append(tile_row)
-        return tile_map
 
     def createGrid(self):
         grid = []
@@ -32,7 +23,8 @@ class Application(tk.Frame):
             row = []
             for j in range(self.col):
                 random_seed = math.floor(random.random() * 2)
-                btn = tk.Button(text=f'{random_seed}', width=2, height=1)
+                btn = Cell(f'{random_seed}')
+                btn.button.config(text="")
                 btn.grid(row=i, column=j)
                 row.append(btn)
             grid.append(row)
@@ -42,8 +34,10 @@ class Application(tk.Frame):
         seed = str(math.floor(random.random() * 2))
         for row in range(len(self.cells)):
             for col in range(len(self.cells[row])):
-                if self.cells[row][col]['text'] == seed:
-                    self.cells[row][col].config(text="BOMB")
+                cell = self.cells[row][col]
+                if cell.button_value == seed:
+                    cell.button.config(text='BOMB')
+                    cell.isBomb = True
 
 
 if __name__ == '__main__':
@@ -53,5 +47,4 @@ if __name__ == '__main__':
     # Prevent the window from being resized by the user
     app.master.resizable(True, True)
     app.placeBombs()
-    print(app.tileMap)
     app.mainloop()  # Keep this at the bottom
