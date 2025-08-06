@@ -12,6 +12,7 @@ class Logic(tk.Frame):
         self.cells = self.createGrid()
         self.placeBombs()
         self.clicks = 0
+        self.score = 0
 
     def createGrid(self):
         grid = []
@@ -41,3 +42,11 @@ class Logic(tk.Frame):
     @click_count.setter
     def click_count(self, value):
         self.clicks = value
+
+    @property
+    def score_count(self):
+        return self.score
+
+    @score_count.setter
+    def score_count(self, value):
+        self.score = value

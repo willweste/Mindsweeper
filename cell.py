@@ -37,7 +37,10 @@ class Cell(tk.Button):
             self.is_visible = True
             if self.board:
                 self.board.click_count += 1
-                print(self.board.clicks)
+            if self.is_bomb:
+                self.board.score_count -= 1
+            else:
+                self.board.score_count += 1
 
     @property
     def button_value(self):
